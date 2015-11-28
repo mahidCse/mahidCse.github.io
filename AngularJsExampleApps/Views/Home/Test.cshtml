@@ -39,13 +39,14 @@
                 <tr><th>Name</th> <th>Status</th><th>Mark/Unmark</th></tr>
             </thead>
             <tbody>
-                <tr ng-repeat="item in items | orderBy:'Name'">
+                <tr ng-repeat="item in items | orderBy:'Name' | checkMyFilter:checkStatus">
                     <td>{{item.Name}}</td>
                     <td>{{item.Status}}</td>
                     <td><input type="checkbox" ng-model="item.Status" /></td>
                 </tr>
             </tbody>
         </table>
+        <input type="checkbox" class="form-inline" ng-model="checkStatus"/> See all students
 
     </div>
 </div>
@@ -93,6 +94,18 @@
             ];
             $scope.AddStudent = function(name, status) {
                 $scope.items.push({ Name: name, Status: status.value=="true"?true:false});
+            };
+        });
+        myApp.filter("checkMyFilter", function() {
+            return function(items, checkStatus) {
+                var informationWithFilter = [];
+                angular.forEach(items, function(item)
+                {
+                    if (item.Status == false || checkStatus == true) {
+                        informationWithFilter.push(item);
+                    }
+                });
+                return informationWithFilter;
             };
         });
     </script>

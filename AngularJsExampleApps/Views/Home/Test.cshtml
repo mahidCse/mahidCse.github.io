@@ -88,11 +88,11 @@
                 return count;
             };
             $scope.options = [
-                { label: 'Mark Student', value: "true" },
+                { label:'Mark Student', value:"true" },
             {label:'Unmark Student', value:"false" }
             ];
             $scope.AddStudent = function(name, status) {
-                information.items.push({ Name: name, Status: status.Value ? true : false });
+                $scope.items.push({ Name: name, Status: status.value=="true"?true:false});
             };
         });
     </script>
